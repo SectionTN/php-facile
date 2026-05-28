@@ -1,0 +1,159 @@
+/* ============================================================
+   PHP Facile — theme.css
+   Variables, reset, thèmes (sombre "nuit d'étude" / clair "papier"),
+   typographie, atmosphère (grain + mesh).
+   ============================================================ */
+
+/* ---------- THÈME SOMBRE (défaut) ---------- */
+:root,
+[data-theme="dark"] {
+  --bg:        #15131c;
+  --bg-2:      #1b1825;
+  --surface:   #221d2e;
+  --surface-2: #2a2438;
+  --border:    #322b44;
+  --border-soft:#2a2438;
+
+  --text:      #f3eefb;
+  --text-soft: #d6cee6;
+  --muted:     #9a90ad;
+
+  --primary:   #9d7bff;   /* violet PHP, réchauffé */
+  --primary-2: #b79bff;
+  --primary-soft: rgba(157,123,255,.16);
+  --accent:    #ff9460;   /* corail "humain" */
+  --accent-soft: rgba(255,148,96,.15);
+  --mint:      #56e0b0;   /* succès */
+  --mint-soft: rgba(86,224,176,.14);
+  --rose:      #ff6b8a;   /* erreur */
+  --rose-soft: rgba(255,107,138,.14);
+  --gold:      #ffd479;   /* badges */
+
+  --code-bg:   #110e19;
+  --code-line: #221d30;
+
+  --shadow:    0 18px 50px -18px rgba(0,0,0,.7);
+  --shadow-sm: 0 6px 18px -8px rgba(0,0,0,.6);
+  --ring:      0 0 0 3px var(--primary-soft);
+
+  --mesh-1: rgba(157,123,255,.20);
+  --mesh-2: rgba(255,148,96,.13);
+  --mesh-3: rgba(86,224,176,.10);
+  --grain-opacity: .035;
+}
+
+/* ---------- THÈME CLAIR "papier" ---------- */
+[data-theme="light"] {
+  --bg:        #f7f1e8;
+  --bg-2:      #f0e7d8;
+  --surface:   #fffdf8;
+  --surface-2: #f6efe3;
+  --border:    #e4d8c5;
+  --border-soft:#ece2d3;
+
+  --text:      #2a2333;
+  --text-soft: #463c54;
+  --muted:     #786d86;
+
+  --primary:   #6d4fd6;
+  --primary-2: #5a3dc0;
+  --primary-soft: rgba(109,79,214,.12);
+  --accent:    #d96a30;
+  --accent-soft: rgba(217,106,48,.14);
+  --mint:      #11936b;
+  --mint-soft: rgba(17,147,107,.12);
+  --rose:      #d6395f;
+  --rose-soft: rgba(214,57,95,.10);
+  --gold:      #c98a14;
+
+  --code-bg:   #2a2333;
+  --code-line: #3a3148;
+
+  --shadow:    0 18px 44px -22px rgba(64,44,30,.4);
+  --shadow-sm: 0 6px 16px -10px rgba(64,44,30,.35);
+
+  --mesh-1: rgba(109,79,214,.12);
+  --mesh-2: rgba(217,106,48,.12);
+  --mesh-3: rgba(17,147,107,.08);
+  --grain-opacity: .045;
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background .4s ease, color .3s ease;
+}
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input { font-family: inherit; }
+a { color: var(--primary-2); text-decoration: none; }
+::selection { background: var(--primary); color: #fff; }
+
+/* ---------- TYPOGRAPHIE ---------- */
+h1, h2, h3, h4 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 640; }
+h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+h3 { font-size: 1.28rem; }
+h4 { font-size: 1.05rem; font-family: "Manrope", sans-serif; font-weight: 700; }
+p  { color: var(--text-soft); }
+code, kbd, pre { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+.serif { font-family: "Fraunces", Georgia, serif; }
+.eyebrow {
+  font-size: .76rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--primary-2);
+}
+
+/* ---------- ATMOSPHÈRE ---------- */
+.grain {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.mesh {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 12% 8%, var(--mesh-1), transparent 70%),
+    radial-gradient(50% 45% at 92% 18%, var(--mesh-2), transparent 70%),
+    radial-gradient(55% 60% at 75% 95%, var(--mesh-3), transparent 70%);
+  filter: blur(8px);
+  animation: meshDrift 26s ease-in-out infinite alternate;
+}
+@keyframes meshDrift {
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(0,-2%,0) scale(1.05); }
+}
+
+/* ---------- UTILITAIRES ---------- */
+.muted { color: var(--muted); }
+.tag {
+  display: inline-flex; align-items: center; gap: .35em;
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  padding: .3em .7em; border-radius: 999px;
+  background: var(--primary-soft); color: var(--primary-2);
+  text-transform: uppercase;
+}
+.tag.facile  { background: var(--mint-soft);   color: var(--mint); }
+.tag.moyen   { background: var(--accent-soft);  color: var(--accent); }
+.tag.difficile{background: var(--rose-soft);    color: var(--rose); }
+.tag.examen  { background: var(--primary-soft); color: var(--primary-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Facile — Apprendre, réviser, réussir</title>
+<meta name="description" content="Plateforme interactive pour apprendre PHP, réviser vite et réussir tes examens. Cours humanisés, simulateurs, QCM et fiches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐘%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="mesh" aria-hidden="true"></div>
+
+<!-- ============ SIDEBAR / NAV ============ -->
+<aside class="sidebar" id="sidebar">
+  <a href="#/accueil" class="brand" data-link>
+    <span class="brand-mark">🐘</span>
+    <span class="brand-text"><b>PHP</b> Facile</span>
+  </a>
+
+  <button class="nav-close" id="navClose" aria-label="Fermer le menu">✕</button>
+
+  <nav class="nav" id="mainNav">
+    <a href="#/accueil" class="nav-item" data-link><span class="ni-ico">⌂</span> Accueil</a>
+
+    <p class="nav-label">Apprendre</p>
+    <a href="#/chapitre/bases" class="nav-item" data-link><span class="ni-ico">0</span> Les bases</a>
+    <a href="#/chapitre/conditions" class="nav-item" data-link><span class="ni-ico">3</span> Conditions</a>
+    <a href="#/chapitre/boucles" class="nav-item" data-link><span class="ni-ico">3</span> Boucles</a>
+    <a href="#/chapitre/fonctions" class="nav-item" data-link><span class="ni-ico">4</span> Fonctions</a>
+    <a href="#/chapitre/chaines" class="nav-item" data-link><span class="ni-ico">4</span> Chaînes</a>
+    <a href="#/chapitre/tableaux" class="nav-item" data-link><span class="ni-ico">5</span> Tableaux</a>
+    <a href="#/chapitre/mysql" class="nav-item" data-link><span class="ni-ico">6</span> MySQL</a>
+    <a href="#/chapitre/sessions" class="nav-item" data-link><span class="ni-ico">7</span> Sessions &amp; Cookies</a>
+
+    <p class="nav-label">Pratiquer</p>
+    <a href="#/fonctions" class="nav-item" data-link><span class="ni-ico">ƒ</span> Fonctions PHP</a>
+    <a href="#/simulateurs" class="nav-item" data-link><span class="ni-ico">▶</span> Simulateurs</a>
+    <a href="#/exercices" class="nav-item" data-link><span class="ni-ico">✎</span> Exercices</a>
+    <a href="#/qcm" class="nav-item" data-link><span class="ni-ico">?</span> QCM</a>
+    <a href="#/projets" class="nav-item" data-link><span class="ni-ico">⚙</span> Mini-projets</a>
+
+    <p class="nav-label">Réviser</p>
+    <a href="#/fiches" class="nav-item" data-link><span class="ni-ico">▤</span> Fiches révision</a>
+    <a href="#/examen" class="nav-item" data-link><span class="ni-ico">⏱</span> Mode examen</a>
+    <a href="#/derniere-heure" class="nav-item hot" data-link><span class="ni-ico">🔥</span> Dernière heure</a>
+  </nav>
+
+  <div class="nav-foot">
+    <div class="prog-mini">
+      <div class="prog-mini-track"><span id="progMiniBar"></span></div>
+      <small id="progMiniText">0% du cours</small>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <button class="icon-btn" id="navToggle" aria-label="Ouvrir le menu">☰</button>
+  <a href="#/accueil" class="topbar-brand" data-link>🐘 <b>PHP</b> Facile</a>
+  <button class="search-trigger" id="searchTrigger">
+    <span>🔎 Rechercher…</span><kbd>/</kbd>
+  </button>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="focusToggle" title="Mode concentration (F)">◐</button>
+    <button class="icon-btn" id="themeToggle" title="Thème clair / sombre (T)">☀</button>
+  </div>
+</header>
+
+<!-- ============ MAIN ============ -->
+<main class="content" id="app"><!-- rendu par JS --></main>
+
+<!-- ============ SEARCH MODAL ============ -->
+<div class="modal" id="searchModal" hidden>
+  <div class="modal-bg" data-close-search></div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Cherche un cours, une fonction, un mot-clé…" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+    <div class="search-hint">Entrée pour ouvrir · Échap pour fermer</div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast" hidden></div>
+
+<!-- ============ DATA ============ -->
+<script src="data/chapters.js"></script>
+<script src="data/chapters2.js"></script>
+<script src="data/functions.js"></script>
+<script src="data/exercises.js"></script>
+<script src="data/quizzes.js"></script>
+<script src="data/revision.js"></script>
+<script src="data/projects.js"></script>
+<!-- ============ ENGINE ============ -->
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/simulators.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/exam.js"></script>
+<script src="js/render.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
