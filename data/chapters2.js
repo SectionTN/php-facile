@@ -288,6 +288,141 @@ window.CHAPTERS.push(
       "<code>setcookie(nom, valeur, expiration)</code> · lecture via <code>$_COOKIE['nom']</code>."
     ]}
   ]
+},
+
+/* ---------------------------------------------------------- 8. POO */
+{
+  id:"poo", num:"08", icon:"🧬", title:"Programmation orientée objet",
+  subtitle:"Ranger ton code en objets réutilisables : classes, $this, héritage et PDO.",
+  blocks:[
+    {t:"p", x:"La <strong>POO</strong> (programmation orientée objet) est une façon d'organiser ton code pour qu'il soit plus clair, plus facile à maintenir et réutilisable. L'idée&nbsp;: représenter des choses (du monde réel ou non) sous forme d'<strong>objets</strong>."},
+    {t:"analogy", x:"Une <em>classe</em>, c'est le plan d'une maison. Un <em>objet</em>, c'est une maison construite à partir de ce plan. Avec un seul plan, tu bâtis autant de maisons que tu veux."},
+
+    {t:"h2", x:"1. La classe et ses attributs"},
+    {t:"p", x:"Une classe regroupe des <strong>attributs</strong> (les données, ex&nbsp;: le nombre de roues) et des <strong>méthodes</strong> (les actions, ce sont des fonctions internes). On modélise par exemple une voiture&nbsp;:"},
+    {t:"code", cap:"Une classe Voiture", x:`<?php
+class Voiture {
+  // Attributs (les données de l'objet)
+  private $niveau_carburant;
+  private $nombre_portes;
+  private $nombre_roues;
+
+  // Le constructeur : appelé à la création de l'objet
+  public function __construct() {
+    $this->niveau_carburant = 50;
+    $this->nombre_portes = 3;
+    $this->nombre_roues = 4;
+  }
+
+  // Une méthode (action sur l'objet)
+  public function modifier_carburant($niveau) {
+    $this->niveau_carburant = $niveau;
+  }
+}
+?>`},
+    {t:"callout", kind:"tip", title:"Le rôle de $this", x:"À l'intérieur d'une classe, <code>$this</code> désigne «&nbsp;l'objet courant&nbsp;». <code>$this-&gt;niveau_carburant</code> veut dire «&nbsp;l'attribut niveau_carburant de CET objet&nbsp;». La flèche <code>-&gt;</code> sert à accéder aux attributs et méthodes d'un objet."},
+
+    {t:"h2", x:"2. Le constructeur __construct"},
+    {t:"p", x:"<code>__construct()</code> est une méthode <strong>spéciale</strong> exécutée automatiquement quand on crée l'objet. Son boulot&nbsp;: initialiser les attributs. On peut lui donner des arguments, et même des <strong>valeurs par défaut</strong>."},
+    {t:"code", cap:"Constructeur avec arguments + valeur par défaut", x:`<?php
+public function __construct($carburant, $portes, $roues = 4) {
+  $this->niveau_carburant = $carburant;
+  $this->nombre_portes = $portes;
+  $this->nombre_roues = $roues;   // 4 par défaut
+}
+?>`},
+
+    {t:"h2", x:"3. Créer un objet (instanciation)"},
+    {t:"p", x:"On «&nbsp;fabrique&nbsp;» un objet avec le mot-clé <code>new</code>. C'est ce qu'on appelle <strong>instancier</strong> la classe."},
+    {t:"code", x:`<?php
+// roues = 4 par défaut, pas besoin de le préciser
+$objet = new Voiture(50, 3);
+
+// ici on précise les 6 roues
+$autre = new Voiture(10, 5, 6);
+?>`},
+
+    {t:"h2", x:"4. La visibilité : public, private, protected"},
+    {t:"list", items:[
+      "<code>public</code> — accessible de partout (même hors de la classe).",
+      "<code>private</code> — accessible <b>uniquement à l'intérieur</b> de la classe.",
+      "<code>protected</code> — accessible dans la classe <b>et</b> ses classes filles (héritage)."
+    ]},
+    {t:"code", cap:"Ce qui marche... et ce qui plante", x:`<?php
+$voiture = new Voiture(50, 3);
+
+echo $voiture->nombre_portes;   // OK si public
+echo $voiture->nombre_roues;    // ERREUR si private !
+?>`},
+    {t:"callout", kind:"exam", title:"Pourquoi cacher des attributs ?", x:"Mettre un attribut en <code>private</code>, c'est le protéger&nbsp;: on force à passer par des méthodes pour le modifier (ex. <code>modifier_carburant</code>). C'est le principe d'<strong>encapsulation</strong> — une question classique d'examen."},
+
+    {t:"h3", x:"Le destructeur __destruct"},
+    {t:"p", x:"À l'opposé du constructeur, <code>__destruct()</code> est appelé automatiquement quand l'objet est détruit (fin du script). Utile pour fermer une connexion, par exemple."},
+    {t:"code", x:`<?php
+public function __destruct() {
+  echo "L'objet a été détruit";
+}
+?>`},
+
+    {t:"h2", x:"5. L'héritage"},
+    {t:"p", x:"L'héritage permet à une classe <strong>fille</strong> de récupérer les attributs et méthodes d'une classe <strong>parente</strong>, puis d'ajouter les siens. On utilise <code>extends</code>."},
+    {t:"code", cap:"Voiture hérite de Vehicule", x:`<?php
+class Vehicule {
+  protected $prix;   // protected : les filles y ont accès
+
+  public function __construct($prix) {
+    $this->prix = $prix;
+  }
+  public function modifier_prix($nouveau) {
+    $this->prix = $nouveau;
+  }
+}
+
+class Voiture extends Vehicule {
+  private $climatisation;
+
+  public function __construct($prix, $clim) {
+    parent::__construct($prix);   // appelle le constructeur parent
+    $this->climatisation = $clim;
+  }
+}
+?>`},
+    {t:"callout", kind:"tip", title:"parent:: , le raccourci vers le parent", x:"<code>parent::__construct($prix)</code> appelle le constructeur de la classe parente. Ça évite de réécrire le code déjà présent dans le parent — c'est tout l'intérêt de l'héritage&nbsp;: ne pas se répéter."},
+    {t:"code", cap:"Instanciation de la classe fille", x:`<?php
+$voiture = new Voiture(17000, true);  // prix + clim
+$voiture->modifier_prix(15000);        // méthode héritée du parent !
+?>`},
+
+    {t:"h2", x:"6. PHP et MySQL avec PDO"},
+    {t:"p", x:"PDO est la façon <strong>moderne et sûre</strong> de se connecter à une base de données en PHP (elle remplace les vieilles fonctions <code>mysql_*</code>). Bonus&nbsp;: elle marche avec plusieurs SGBD (MySQL, PostgreSQL, Oracle…)."},
+    {t:"code", cap:"Connexion + gestion d'erreur", x:`<?php
+try {
+  $bdd = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (Exception $e) {
+  die('Erreur : ' . $e->getMessage());
+}
+?>`},
+    {t:"p", x:"On exécute une requête avec <code>query()</code>, puis on lit les lignes une par une avec <code>fetch()</code> — exactement la même logique que le <code>while + fetch</code> du chapitre MySQL."},
+    {t:"code", cap:"Lire et afficher des données", x:`<?php
+$reponse = $bdd->query('SELECT * FROM jeux_video');
+
+while ($donnees = $reponse->fetch()) {
+  echo $donnees['nom'] . " — " . $donnees['prix'] . " €<br>";
+}
+
+$reponse->closeCursor();   // on a fini avec cette requête
+?>`},
+    {t:"callout", kind:"exam", title:"$reponse vs $donnees", x:"<code>$reponse</code> = la réponse brute de MySQL (un objet). <code>$donnees</code> = une seule ligne, sous forme de tableau, renvoyée par <code>fetch()</code>. La ligne <code>while ($donnees = $reponse-&gt;fetch())</code> fait deux choses&nbsp;: elle récupère la ligne suivante <strong>et</strong> teste s'il en reste."},
+
+    {t:"recap", items:[
+      "<b>Classe</b> = plan, <b>objet</b> = instance créée avec <code>new</code>.",
+      "<code>$this-&gt;attribut</code> à l'intérieur · <code>$objet-&gt;attribut</code> à l'extérieur.",
+      "<code>__construct</code> initialise · <code>__destruct</code> nettoie · visibilité&nbsp;: public/private/protected.",
+      "<code>class Fille extends Parent</code> + <code>parent::__construct()</code> pour hériter.",
+      "PDO = connexion moderne&nbsp;: <code>new PDO(...)</code> dans un <code>try/catch</code>, puis <code>query</code> + <code>fetch</code>."
+    ]}
+  ]
 }
 
 );

@@ -112,6 +112,23 @@ window.EXERCISES = [
   statement:"Crée un cookie « VISITE » contenant la date, valable 1 heure.",
   solution:`setcookie("VISITE", date("d/m/y"), time() + 3600);`,
   method:"setcookie(nom, valeur, expiration). time()+3600 = maintenant + une heure (3600 secondes)."
+},
+
+/* ---- POO ---- */
+{ id:"p1", chap:"poo", level:"moyen", title:"Classe Etudiant",
+  statement:"Crée une classe Etudiant avec un attribut privé $nom, un constructeur qui l'initialise, et une méthode getNom() qui le renvoie.",
+  solution:`class Etudiant {\n  private $nom;\n\n  public function __construct($nom) {\n    $this->nom = $nom;\n  }\n  public function getNom() {\n    return $this->nom;\n  }\n}\n\n$e = new Etudiant("Sara");\necho $e->getNom();   // Sara`,
+  method:"L'attribut est private → on y accède via une méthode (getNom). Le constructeur reçoit $nom et l'affecte à $this->nom."
+},
+{ id:"p2", chap:"poo", level:"examen", title:"Héritage Animal → Chien",
+  statement:"Crée une classe Animal (attribut protected $nom) et une classe Chien qui en hérite et ajoute une méthode aboyer().",
+  solution:`class Animal {\n  protected $nom;\n  public function __construct($nom) {\n    $this->nom = $nom;\n  }\n}\n\nclass Chien extends Animal {\n  public function aboyer() {\n    return $this->nom . " : Wouf !";\n  }\n}\n\n$c = new Chien("Rex");\necho $c->aboyer();   // Rex : Wouf !`,
+  method:"protected permet à Chien d'accéder à $nom hérité. extends crée la classe fille ; le constructeur du parent suffit ici (pas besoin d'en réécrire un)."
+},
+{ id:"p3", chap:"poo", level:"difficile", title:"Lister des données avec PDO",
+  statement:"Connecte-toi en PDO à la base « test » et affiche le nom de chaque ligne de la table « membres ».",
+  solution:`try {\n  $bdd = new PDO('mysql:host=localhost;dbname=test', 'root', '');\n  $rep = $bdd->query('SELECT * FROM membres');\n  while ($d = $rep->fetch()) {\n    echo $d['nom'] . "<br>";\n  }\n  $rep->closeCursor();\n} catch (Exception $e) {\n  die('Erreur : ' . $e->getMessage());\n}`,
+  method:"Connexion dans un try/catch, query() pour le SELECT, while+fetch() pour lire ligne par ligne, closeCursor() à la fin."
 }
 
 ];

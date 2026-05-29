@@ -62,6 +62,17 @@ window.QUIZZES = [
 {chap:"sessions", q:"Où sont stockées les variables de session ?", opts:["Chez le client","Côté serveur","Dans l'URL","Dans un cookie texte"], correct:1, explain:"La session vit côté serveur ; seul l'ID transite (souvent via cookie)."},
 {chap:"sessions", q:"Un cookie est stocké…", opts:["côté serveur","côté client (navigateur)","dans la base","nulle part"], correct:1, explain:"Un cookie est un petit fichier texte stocké sur la machine du visiteur."},
 {chap:"sessions", q:"Comment ferme-t-on une session ?", opts:["<code>session_close()</code>","<code>session_destroy()</code>","<code>unset()</code>","<code>exit</code>"], correct:1, explain:"<code>session_destroy()</code> détruit la session (déconnexion)."},
-{chap:"sessions", q:"Que fait <code>setcookie(\"X\", \"\", time()-3600)</code> ?", opts:["Crée X","Détruit le cookie X (date passée)","Lit X","Rien"], correct:1, explain:"Une date d'expiration dans le passé supprime le cookie."}
+{chap:"sessions", q:"Que fait <code>setcookie(\"X\", \"\", time()-3600)</code> ?", opts:["Crée X","Détruit le cookie X (date passée)","Lit X","Rien"], correct:1, explain:"Une date d'expiration dans le passé supprime le cookie."},
+
+/* ---- POO ---- */
+{chap:"poo", q:"Quel mot-clé crée un objet à partir d'une classe ?", opts:["<code>create</code>","<code>new</code>","<code>object</code>","<code>class</code>"], correct:1, explain:"<code>$obj = new Voiture();</code> instancie la classe."},
+{chap:"poo", q:"À quoi sert <code>$this</code> dans une classe ?", opts:["À créer un objet","À désigner l'objet courant","À hériter","À fermer la classe"], correct:1, explain:"<code>$this</code> représente l'objet en cours ; <code>$this-&gt;x</code> accède à son attribut x."},
+{chap:"poo", q:"Quelle méthode est appelée automatiquement à la création de l'objet ?", opts:["<code>__start()</code>","<code>__construct()</code>","<code>__new()</code>","<code>__init()</code>"], correct:1, explain:"Le constructeur <code>__construct()</code> initialise les attributs."},
+{chap:"poo", q:"Un attribut <code>private</code> est accessible…", opts:["de partout","uniquement dans la classe","seulement par les filles","jamais"], correct:1, explain:"private = visible uniquement à l'intérieur de la classe (encapsulation)."},
+{chap:"poo", q:"Quel mot-clé fait hériter une classe d'une autre ?", opts:["<code>inherits</code>","<code>extends</code>","<code>implements</code>","<code>parent</code>"], correct:1, explain:"<code>class Voiture extends Vehicule</code> : Voiture hérite de Vehicule."},
+{chap:"poo", q:"Comment appeler le constructeur de la classe parente ?", opts:["<code>super()</code>","<code>parent::__construct()</code>","<code>this::construct()</code>","<code>base()</code>"], correct:1, explain:"<code>parent::__construct(...)</code> appelle le constructeur du parent."},
+{chap:"poo", q:"Quelle visibilité est accessible par la classe ET ses filles ?", opts:["<code>private</code>","<code>protected</code>","<code>public</code>","<code>static</code>"], correct:1, explain:"protected : accessible dans la classe et celles qui en héritent."},
+{chap:"poo", q:"Avec PDO, comment exécute-t-on un SELECT ?", opts:["<code>$bdd->select()</code>","<code>$bdd->query('SELECT ...')</code>","<code>mysql_query()</code>","<code>$bdd->fetch()</code>"], correct:1, explain:"<code>query()</code> exécute la requête ; <code>fetch()</code> lit ensuite les lignes."},
+{chap:"poo", q:"Pourquoi entourer une connexion PDO d'un <code>try/catch</code> ?", opts:["Pour aller plus vite","Pour gérer proprement les erreurs de connexion","C'est obligatoire en PHP","Pour fermer la base"], correct:1, explain:"PDO lève des exceptions ; try/catch permet d'afficher un message au lieu de planter."}
 
 ];

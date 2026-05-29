@@ -70,6 +70,18 @@ window.FICHES = [
   ["<code>setcookie(n, v, exp)</code>","Créer un cookie"],
   ["<code>$_COOKIE['n']</code>","Lire un cookie"],
   ["Session = serveur","Cookie = client (durable)"]
+]},
+{ chap:"poo", title:"POO & PDO", rows:[
+  ["<code>class Nom { }</code>","Définir une classe"],
+  ["<code>new Nom()</code>","Créer un objet (instancier)"],
+  ["<code>$this-&gt;attr</code>","Attribut de l'objet courant"],
+  ["<code>__construct()</code>","Constructeur (init auto)"],
+  ["<code>__destruct()</code>","Destructeur (nettoyage auto)"],
+  ["public / private / protected","Partout / classe seule / + filles"],
+  ["<code>extends</code>","Hériter d'une classe parente"],
+  ["<code>parent::__construct()</code>","Appeler le constructeur parent"],
+  ["<code>new PDO(dsn, user, pwd)</code>","Connexion BDD moderne"],
+  ["<code>$bdd-&gt;query()</code> + <code>fetch()</code>","Requête + lecture"]
 ]}
 ];
 
@@ -102,5 +114,11 @@ window.FLASH = [
     "<code>session_start()</code> et <code>setcookie()</code> AVANT tout HTML.",
     "4 étapes MySQL : connecter → sélectionner → requêter → exploiter.",
     "Lire : <code>while ($r = mysql_fetch_array($res))</code>."
+  ]},
+  { t:"POO en 30 secondes", items:[
+    "<code>class</code> = plan, <code>new</code> = objet · <code>$this-&gt;x</code> dans la classe.",
+    "<code>__construct</code> init · public/private/protected (visibilité).",
+    "<code>extends</code> + <code>parent::__construct()</code> pour hériter.",
+    "PDO : <code>new PDO(...)</code> dans try/catch, puis <code>query</code> + <code>fetch</code>."
   ]}
 ];
